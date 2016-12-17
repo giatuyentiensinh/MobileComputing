@@ -1,0 +1,41 @@
+<!--
+  Generated template for the Search page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <ion-title>Tìm kiếm</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <!-- form -->
+    <form (ngSubmit)="searchAddr()">
+        <ion-item>
+            <ion-label>Địa chỉ</ion-label>
+            <ion-input type="text" [(ngModel)]="address" clearInput="true" name="address" required></ion-input>
+        </ion-item>
+        <button ion-button type="submit" block>Tìm kiếm</button>
+    </form>
+    <!-- Result -->
+    <ion-title *ngIf="results" padding>
+        <button ion-item>
+            Kết quả:
+            <ion-badge item-right (click)="showAll(results)">{{results.length}} điểm</ion-badge>
+        </button>
+    </ion-title>
+    <!-- list item -->
+    <ion-card *ngFor="let location of results; let i = index;" (click)="selectAddress(location)">
+        <ion-card-header>
+            <ion-item>
+                <ion-icon name="locate" color="secondary" item-left></ion-icon>
+                {{location.address_components[0].short_name}}
+                <ion-badge item-right>{{i + 1}}</ion-badge>
+            </ion-item>
+        </ion-card-header>
+        <p>
+            {{ location.formatted_address }}
+        </p>
+    </ion-card>
+</ion-content>

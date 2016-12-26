@@ -39,10 +39,6 @@ export class SearchPage {
 				try {
 					let results = JSON.parse(resp.data).results;
 					this.results = results;
-					// for (let result of results) {
-					// 	console.log(result.geometry.location);
-					// 	console.log(result.formatted_address);
-					// }
 				} catch (e) {
 					console.error("JSON parsing error");
 				}

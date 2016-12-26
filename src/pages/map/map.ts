@@ -13,6 +13,8 @@ export class MapPage {
 
 	@ViewChild('map') mapElement: ElementRef;
 	map: any;
+	@ViewChild('btn') btnElement: ElementRef;
+	btn: any;
 	mapInitialised: boolean = false;
 	apiKey: any;
 
@@ -94,6 +96,7 @@ export class MapPage {
 		this.mapInitialised = true;
 		Geolocation.getCurrentPosition().then((position) => {
 			let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			// let latLng = { lat: 41.85, lng: -87.65 };
 			let mapOptions = {
 				center: latLng,
 				zoom: 15,
@@ -104,6 +107,18 @@ export class MapPage {
 				position: latLng,
 				map: this.map,
 				animation: google.maps.Animation.DROP
+			});
+
+			let controlDiv = this.btnElement.nativeElement;
+
+			// Set CSS for the control border.
+			let controlUI = document.createElement('div');
+			controlUI.innerHTML = 'Vị trí hiện tại';
+			controlDiv.appendChild(controlUI);
+
+			// Setup the click event listeners: simply set the map to Chicago.
+			controlUI.addEventListener('click', () => {
+				this.map.setCenter(latLng);
 			});
 		});
 	}

@@ -1,5 +1,4 @@
 # Mobile Computing Course
-==============================
 
 ## Cross Platform using `Ionic2 Framework`
 
@@ -8,8 +7,8 @@
  - Angular 2
  - Cordova v6.4.0
  - Ionic 2 plugin:
-   - cordova-plugin-geolocation 2.4.1 "Geolocation"
-   - cordova-plugin-network-information 1.3.1 "Network Information"
+   > cordova-plugin-geolocation 2.4.1 "Geolocation"
+   > cordova-plugin-network-information 1.3.1 "Network Information"
 
 ## Setup
 
@@ -45,6 +44,7 @@
 * https://ionicframework.com/docs/
 * https://developers.google.com/maps/documentation/javascript/examples/geocoding-simple
 * http://www.joshmorony.com/ionic-2-how-to-use-google-maps-geolocation-video-tutorial/
+* http://www.joshmorony.com/create-a-nearby-places-list-with-google-maps-in-ionic-2-part-2/
 
 ## Image
 

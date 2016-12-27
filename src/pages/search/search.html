@@ -19,19 +19,20 @@
         <button ion-button type="submit" block>Tìm kiếm</button>
     </form>
     <!-- Result -->
-    <ion-title *ngIf="results" padding>
+    <ion-title *ngIf="locations.data" padding>
         <button ion-item>
             Kết quả:
-            <ion-badge item-right (click)="showAll(results)">{{results.length}} điểm</ion-badge>
+            <ion-badge item-right (click)="showAll(locations.data)">{{locations.data.length}} điểm</ion-badge>
         </button>
     </ion-title>
     <!-- list item -->
-    <ion-card *ngFor="let location of results; let i = index;" (click)="selectAddress(location)">
+    <ion-card *ngFor="let location of locations.data" (click)="selectAddress(location)">
         <ion-card-header>
             <ion-item>
-                <ion-icon name="pin" color="secondary" item-left></ion-icon>
+                <ion-icon name="pin" color="primary" item-left>
+                </ion-icon>                
                 {{location.address_components[0].short_name}}
-                <ion-badge item-right>{{i + 1}}</ion-badge>
+                <ion-badge item-right>{{location.distance}} km</ion-badge>
             </ion-item>
         </ion-card-header>
         <p>

@@ -7,8 +7,9 @@
  - Angular 2
  - Cordova v6.4.0
  - Ionic 2 plugin:
-   > cordova-plugin-geolocation 2.4.1 "Geolocation"
-   > cordova-plugin-network-information 1.3.1 "Network Information"
+
+   - cordova-plugin-geolocation 2.4.1 "Geolocation"
+   - cordova-plugin-network-information 1.3.1 "Network Information"
 
 ## Setup
 
@@ -38,6 +39,40 @@
 
 * Debugging with [Chrome](https://ionicframework.com/docs/v2/resources/developer-tips/)
 
+* Note
+
+  * Web-developer using ('src/providers/locations.ts')
+
+  ```typescript
+  this.http.get(url).map(res => res.json())
+  	.subscribe(data => {
+  		this.data = this.applyHaversine(data.results);
+  		resolve(this.data);
+  	});
+  ...
+  ```
+
+  * Mobile-developer using ('src/providers/locations.ts')
+
+  ```typescript
+  ...
+  HTTP.get(url, {}, {})
+    .then(resp => {
+        console.log(resp.data); // data received by server
+        try {
+            this.data = this.applyHaversine(JSON.parse(resp.data).results);
+            resolve(this.data);
+        } catch (e) {
+            console.error("JSON parsing error");
+        }
+    })
+    .catch(error => {
+        console.log('error');
+        console.log(error.status);
+        console.log(error.error); // error message as string
+        console.log(error.headers);
+    });
+  ```
 
 ## Reference
 

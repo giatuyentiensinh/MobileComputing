@@ -1,6 +1,8 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { ConnectivityService } from '../providers/connectivity-service';
+import { Connectivity } from '../providers/connectivity';
+import { GoogleMaps } from '../providers/google-maps';
+import { Locations } from '../providers/locations';
 import { MyApp } from './app.component';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SearchPage } from '../pages/search/search';
@@ -23,6 +25,6 @@ import { MapPage } from '../pages/map/map';
     SearchPage,
     MapPage
   ],
-  providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }, ConnectivityService]
+  providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }, Connectivity, GoogleMaps, Locations]
 })
 export class AppModule { }

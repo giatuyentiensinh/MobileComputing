@@ -5,7 +5,7 @@ import { Platform } from 'ionic-angular';
 declare var Connection;
  
 @Injectable()
-export class ConnectivityService {
+export class Connectivity {
  
   onDevice: boolean;
  

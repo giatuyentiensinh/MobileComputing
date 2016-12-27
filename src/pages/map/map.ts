@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { ConnectivityService } from '../../providers/connectivity-service';
-import { Geolocation } from 'ionic-native';
+import { NavController, NavParams, Platform } from 'ionic-angular';
+import { GoogleMaps } from '../../providers/google-maps';
+import { Locations } from '../../providers/locations';
 
 declare var google;
 
@@ -12,143 +12,51 @@ declare var google;
 export class MapPage {
 
 	@ViewChild('map') mapElement: ElementRef;
-	map: any;
-	@ViewChild('btn') btnElement: ElementRef;
-	btn: any;
-	mapInitialised: boolean = false;
-	apiKey: any;
+	@ViewChild('pleaseConnect') pleaseConnect: ElementRef;
 
-	constructor(public navCtrl: NavController, public params: NavParams, public connectivityService: ConnectivityService) {
-		this.loadGoogleMaps();
+	constructor(public navCtrl: NavController, public params: NavParams, public maps: GoogleMaps, public platform: Platform, public locations: Locations) {
 		let location = this.params.get('location');
-		let locations = this.params.get('locations');
+		let locationsList = this.params.get('locations');
 		if (location != undefined) {
-			console.log(location.geometry.location);
-			Geolocation.getCurrentPosition().then((position) => {
-				let currentPossition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-				let directionsService = new google.maps.DirectionsService();
-				let directionsDisplay = new google.maps.DirectionsRenderer();
-				directionsService.route({
-					origin: currentPossition,
-					destination: location.geometry.location,
-					travelMode: 'DRIVING'
-				}, (response, status) => {
-					if ('OK' === status) {
-						directionsDisplay.setDirections(response);
-						directionsDisplay.setMap(this.map);
-					}
-				});
+			let currentPossition = new google.maps.LatLng(this.maps.currentPosition.latitude, this.maps.currentPosition.longitude);
+			let directionsService = new google.maps.DirectionsService();
+			let directionsDisplay = new google.maps.DirectionsRenderer();
+			directionsService.route({
+				origin: currentPossition,
+				destination: location.geometry.location,
+				travelMode: 'DRIVING'
+			}, (response, status) => {
+				if ('OK' === status) {
+					directionsDisplay.setDirections(response);
+					directionsDisplay.setMap(this.maps.map);
+				}
 			});
-		} else if (locations != undefined) {
-			for (let addr of locations) {
+		} else if (locationsList != undefined) {
+			for (let addr of locationsList) {
 				console.log('------------------');
 				let marker = new google.maps.Marker({
 					position: addr.geometry.location,
-					map: this.map
+					map: this.maps.map
 				});
-				let infoWindow = new google.maps.InfoWindow({
-					content: addr.formatted_address
-				});
-				console.log('addr: ');
+				console.log('addr: ' + addr);
 				console.log(addr);
-				console.log(marker);
-				marker.addListener('click', () => infoWindow.open(this.map, marker));
-			}
-
-		}
-	}
-
-	loadGoogleMaps() {
-		this.addConnectivityListeners();
-		if (typeof google == "undefined" || typeof google.maps == "undefined") {
-			this.disableMap();
-			if (this.connectivityService.isOnline()) {
-				console.log("online, loading map");
-				//Load the SDK
-				window['mapInit'] = () => {
-					this.initMap();
-					this.enableMap();
-				}
-				let script = document.createElement("script");
-				script.id = "googleMaps";
-				if (this.apiKey) {
-					script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit';
-				} else {
-					script.src = 'http://maps.google.com/maps/api/js?callback=mapInit';
-				}
-				document.body.appendChild(script);
-			}
-		}
-		else {
-			if (this.connectivityService.isOnline()) {
-				console.log("showing map");
-				this.initMap();
-				this.enableMap();
-			}
-			else {
-				console.log("disabling map");
-				this.disableMap();
+				// let infoWindow = new google.maps.InfoWindow({
+				// 	content: addr.formatted_address
+				// });
+				// console.log(marker);
+				// marker.addListener('click', () => infoWindow.open(this.maps.map, marker));
 			}
 		}
 	}
 
-	initMap() {
-		this.mapInitialised = true;
-		Geolocation.getCurrentPosition().then((position) => {
-			let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-			// let latLng = { lat: 41.85, lng: -87.65 };
-			let mapOptions = {
-				center: latLng,
-				zoom: 15,
-				mapTypeId: google.maps.MapTypeId.ROADMAP
-			}
-			this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-			new google.maps.Marker({
-				position: latLng,
-				map: this.map,
-				animation: google.maps.Animation.DROP
-			});
-
-			let controlDiv = this.btnElement.nativeElement;
-
-			// Set CSS for the control border.
-			let controlUI = document.createElement('div');
-			controlUI.innerHTML = 'Vị trí hiện tại';
-			controlDiv.appendChild(controlUI);
-
-			// Setup the click event listeners: simply set the map to Chicago.
-			controlUI.addEventListener('click', () => {
-				this.map.setCenter(latLng);
-			});
+	ionViewDidLoad() {
+		this.platform.ready().then(() => {
+			let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement);
+            Promise.all([
+                mapLoaded,
+            ]).then(result => {
+                this.maps.addMarker(this.maps.currentPosition.latitude, this.maps.currentPosition.longitude);
+            });
 		});
-	}
-
-	disableMap() {
-		console.log("disable map");
-	}
-
-	enableMap() {
-		console.log("enable map");
-	}
-
-	addConnectivityListeners() {
-		let onOnline = () => {
-			setTimeout(() => {
-				if (typeof google == "undefined" || typeof google.maps == "undefined") {
-					this.loadGoogleMaps();
-				} else {
-					if (!this.mapInitialised) {
-						this.initMap();
-					}
-					this.enableMap();
-				}
-			}, 2000);
-		};
-		let onOffline = () => {
-			this.disableMap();
-		};
-		document.addEventListener('online', onOnline, false);
-		document.addEventListener('offline', onOffline, false);
-
 	}
 }

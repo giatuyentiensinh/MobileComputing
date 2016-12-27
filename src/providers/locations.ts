@@ -61,11 +61,11 @@ export class Locations {
                 lat: location.geometry.location.lat,
                 lng: location.geometry.location.lng
             };
-            location.distance = this.getDistanceBetweenPoints(
+            location.distance = parseFloat(this.getDistanceBetweenPoints(
                 this.currentLocation,
                 placeLocation,
-                'miles'
-            ).toFixed(2);
+                'km'
+            ).toFixed(2));
             location.location = location.geometry.location;
         });
         return locations;

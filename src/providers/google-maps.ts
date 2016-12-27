@@ -14,10 +14,10 @@ export class GoogleMaps {
 	mapInitialised: boolean = false;
 	mapLoaded: any;
 	mapLoadedObserver: any;
-	markers: any = [];
 	apiKey: string;
 
 	constructor(public connectivity: Connectivity) {
+		// this.apiKey = 'AIzaSyA2GtFNISM5WTflpE4r5EdGZa0z4OgTDic';
 	}
 
 	init(mapElement: any, pleaseConnect: any): Promise<any> {
@@ -27,7 +27,7 @@ export class GoogleMaps {
 	}
 
 	loadGoogleMaps(): Promise<any> {
-		return new Promise((resolve) => {
+		return new Promise(resolve => {
 			if (typeof google == "undefined" || typeof google.maps == "undefined") {
 				console.log("Google maps JavaScript needs to be loaded.");
 				this.disableMap();
@@ -36,13 +36,10 @@ export class GoogleMaps {
 						this.initMap().then(() => {
 							resolve(true);
 						});
-
 						this.enableMap();
 					}
-
 					let script = document.createElement("script");
 					script.id = "googleMaps";
-
 					if (this.apiKey) {
 						script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit';
 					} else {
@@ -69,11 +66,8 @@ export class GoogleMaps {
 		this.mapInitialised = true;
 		return new Promise((resolve) => {
 			Geolocation.getCurrentPosition().then(position => {
-				// UNCOMMENT FOR NORMAL USE
 				let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 				this.currentPosition = position.coords;
-				console.log(this.currentPosition);
-				// let latLng = new google.maps.LatLng(40.713744, -74.009056);
 				let mapOptions = {
 					center: latLng,
 					zoom: 15,
@@ -125,7 +119,23 @@ export class GoogleMaps {
 			animation: google.maps.Animation.DROP,
 			position: latLng
 		});
-		this.markers.push(marker);
+	}
+
+	addDirector(location): void {
+		// console.log(location);
+		let currentPossition = new google.maps.LatLng(this.currentPosition.latitude, this.currentPosition.longitude);
+		let directionsService = new google.maps.DirectionsService();
+		let directionsDisplay = new google.maps.DirectionsRenderer();
+		directionsService.route({
+			origin: currentPossition,
+			destination: location,
+			travelMode: 'DRIVING'
+		}, (response, status) => {
+			if ('OK' === status) {
+				directionsDisplay.setDirections(response);
+				directionsDisplay.setMap(this.map);
+			}
+		});
 	}
 
 }

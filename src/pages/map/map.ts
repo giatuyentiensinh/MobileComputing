@@ -18,33 +18,11 @@ export class MapPage {
 		let location = this.params.get('location');
 		let locationsList = this.params.get('locations');
 		if (location != undefined) {
-			let currentPossition = new google.maps.LatLng(this.maps.currentPosition.latitude, this.maps.currentPosition.longitude);
-			let directionsService = new google.maps.DirectionsService();
-			let directionsDisplay = new google.maps.DirectionsRenderer();
-			directionsService.route({
-				origin: currentPossition,
-				destination: location.geometry.location,
-				travelMode: 'DRIVING'
-			}, (response, status) => {
-				if ('OK' === status) {
-					directionsDisplay.setDirections(response);
-					directionsDisplay.setMap(this.maps.map);
-				}
-			});
+			this.maps.addDirector(location.geometry.location);
 		} else if (locationsList != undefined) {
 			for (let addr of locationsList) {
-				console.log('------------------');
-				let marker = new google.maps.Marker({
-					position: addr.geometry.location,
-					map: this.maps.map
-				});
-				console.log('addr: ' + addr);
-				console.log(addr);
-				// let infoWindow = new google.maps.InfoWindow({
-				// 	content: addr.formatted_address
-				// });
-				// console.log(marker);
-				// marker.addListener('click', () => infoWindow.open(this.maps.map, marker));
+				console.log(addr.geometry.location);
+				this.maps.addMarker(addr.geometry.location.latitude, addr.geometry.location.longitude);
 			}
 		}
 	}

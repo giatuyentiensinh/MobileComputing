@@ -2,14 +2,21 @@
 
 ## Cross Platform using `Ionic2 Framework`
 
-* Include:
+* Information:
 
- - Angular 2
- - Cordova v6.4.0
- - Ionic 2 plugin:
+ - Cordova CLI: 6.4.0
+ - Ionic Framework Version: 2.0.0-rc.4
+ - Ionic CLI Version: 2.1.14
+ - Ionic App Lib Version: 2.1.7
+ - Ionic App Scripts Version: 0.0.47
+ - OS: Linux 3.19
+ - Node Version: v4.4.2
 
-   - cordova-plugin-geolocation 2.4.1 "Geolocation"
-   - cordova-plugin-network-information 1.3.1 "Network Information"
+ - Plugin:
+  ```
+   cordova-plugin-geolocation 2.4.1 "Geolocation"
+   cordova-plugin-network-information 1.3.1 "Network Information"
+  ```
 
 ## Setup
 

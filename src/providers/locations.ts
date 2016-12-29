@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { HTTP } from 'ionic-native';
 import { Geolocation } from 'ionic-native';
 import 'rxjs/add/operator/map';
@@ -14,6 +14,7 @@ import 'rxjs/add/operator/map';
 export class Locations {
 
     data: any;
+    steps: any;
     currentLocation: any;
 
     constructor(public http: Http) {
@@ -26,7 +27,7 @@ export class Locations {
         });
     }
 
-    load(addr: string) {
+    search(addr: string): Promise<any> {
         return new Promise(resolve => {
             let url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=AIzaSyA2GtFNISM5WTflpE4r5EdGZa0z4OgTDic';
             this.http.get(url).map(res => res.json())
@@ -51,6 +52,34 @@ export class Locations {
             //     console.log(error.error); // error message as string
             //     console.log(error.headers);
             // });
+        });
+    }
+
+    direction(addr: string): Promise<any> {
+        return new Promise(resolve => {
+            let url = 'https://maps.googleapis.com/maps/api/directions/json?origin=' + this.currentLocation.lat + ',' + this.currentLocation.lng + '&destination=' + addr + '&key=AIzaSyCmfWiweKXK4IrNugFwvK9Z7oliPh7eo2U';
+            // let header = new Headers();
+            // header.append('Content-Type', 'application/json');
+            // header.append('Access-Control-Allow-Origin', '*');
+            // this.http.get(url, { headers: header })
+            //     .map(res => res.json())
+            //     .subscribe(data => {
+            //         console.log(data);
+            //         // resolve(data);
+            //     });
+
+            console.log(url);
+            HTTP.get(url, {}, {})
+                .then(resp => {
+                    console.log(resp.data); // data received by server
+                    this.steps = JSON.parse(resp.data).routes[0].legs[0].steps;
+                })
+                .catch(error => {
+                    console.log('error');
+                    console.log(error.status);
+                    console.log(error.error); // error message as string
+                    console.log(error.headers);
+                });
         });
     }
 

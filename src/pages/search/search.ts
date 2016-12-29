@@ -21,11 +21,11 @@ export class SearchPage {
 
 	searchAddr() {
 		let addr = this.address.split(' ').join('+');
-		this.locations.load(addr);
+		this.locations.search(addr);
 	}
 
 	selectAddress(location) {
-		console.log(location);
+		console.log(location);		
 		this.navCtrl.push(MapPage, { location: location });
 	}
 

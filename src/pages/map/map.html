@@ -1,5 +1,30 @@
+<ion-menu [content]="direction">
+    <ion-content>
+        <ion-list *ngFor="let step of locations.steps">
+            <ion-list-header [innerHTML]="step.html_instructions"></ion-list-header>
+            <!-- <ion-list-header>{{step.html_instructions}}</ion-list-header> -->
+            <ion-item>
+                <ion-avatar item-left>
+                    <ion-icon name="time" color="primary"></ion-icon>
+                </ion-avatar>
+                <h3>Thời gian</h3>
+                <ion-note item-right>{{step.duration.text}}</ion-note>
+            </ion-item>
+            <ion-item>
+                <ion-avatar item-left>
+                    <ion-icon name="resize" color="primary"></ion-icon>
+                </ion-avatar>
+                <h3>Khoảng cách</h3>
+                <ion-note item-right>{{step.distance.text}}</ion-note>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-menu>
+<ion-nav #direction swipeBackEnabled="false"></ion-nav>
 <ion-header>
     <ion-navbar color="primary">
+        <!-- <ion-icon name="reorder" menuToggle *ngIf="directionCheck"></ion-icon>   -->
+        <!-- <button ion-button menuToggle>Toggle Menu</button> -->
         <ion-title>Bản đồ</ion-title>
     </ion-navbar>
 </ion-header>

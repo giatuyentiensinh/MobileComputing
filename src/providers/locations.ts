@@ -49,7 +49,7 @@ export class Locations {
             // .catch(error => {
             //     console.log('error');
             //     console.log(error.status);
-            //     console.log(error.error); // error message as string
+            //     console.log(error.error);
             //     console.log(error.headers);
             // });
         });
@@ -77,7 +77,7 @@ export class Locations {
                 .catch(error => {
                     console.log('error');
                     console.log(error.status);
-                    console.log(error.error); // error message as string
+                    console.log(error.error);
                     console.log(error.headers);
                 });
         });

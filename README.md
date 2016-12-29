@@ -11,7 +11,6 @@
  - Ionic App Scripts Version: 0.0.47
  - OS: Linux 3.19
  - Node Version: v4.4.2
-
  - Plugin:
   ```
    cordova-plugin-geolocation 2.4.1 "Geolocation"

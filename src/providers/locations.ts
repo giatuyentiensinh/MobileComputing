@@ -73,7 +73,12 @@ export class Locations {
             HTTP.get(url, {}, {})
                 .then(resp => {
                     console.log(resp.data); // data received by server
-                    this.steps = JSON.parse(resp.data).routes[0].legs[0].steps;
+                    try {
+                        this.steps = JSON.parse(resp.data).routes[0].legs[0].steps;
+                    } catch(e) {
+                        console.log("Cannot read property steps of undefined");
+                        console.log(e);
+                    }
                 })
                 .catch(error => {
                     console.log('error');

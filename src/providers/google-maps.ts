@@ -17,7 +17,7 @@ export class GoogleMaps {
 	apiKey: string;
 
 	constructor(public connectivity: Connectivity) {
-		// this.apiKey = 'AIzaSyA2GtFNISM5WTflpE4r5EdGZa0z4OgTDic';
+		this.apiKey = 'AIzaSyA2GtFNISM5WTflpE4r5EdGZa0z4OgTDic';
 	}
 
 	init(mapElement: any, pleaseConnect: any): Promise<any> {
@@ -41,6 +41,7 @@ export class GoogleMaps {
 					let script = document.createElement("script");
 					script.id = "googleMaps";
 					if (this.apiKey) {
+						// script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit';
 						script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit';
 					} else {
 						script.src = 'http://maps.google.com/maps/api/js?callback=mapInit';

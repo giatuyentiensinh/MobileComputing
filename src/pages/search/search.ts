@@ -4,8 +4,6 @@ import { Locations } from '../../providers/locations';
 
 import { MapPage } from '../map/map';
 
-declare var google;
-
 @Component({
 	selector: 'page-search',
 	templateUrl: 'search.html',

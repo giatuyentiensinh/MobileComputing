@@ -32,7 +32,8 @@ export class Locations {
             let url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=AIzaSyA2GtFNISM5WTflpE4r5EdGZa0z4OgTDic';
             this.http.get(url).map(res => res.json())
                 .subscribe(data => {
-                    this.data = this.applyHaversine(data.results);
+                    this.data = this.applyHaversine(data.results)
+                        .sort((addr1, addr2) => (addr1.distance - addr2.distance));
                     resolve(this.data);
                 });
             // HTTP.get(url, {}, {})

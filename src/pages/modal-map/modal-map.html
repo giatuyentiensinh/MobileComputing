@@ -17,22 +17,22 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <!-- <ion-list *ngFor="let step of locations.steps"> -->
     <ion-list *ngFor="let step of locations.steps">
-        <ion-list-header [innerHTML]="step.html_instructions"></ion-list-header>
-        <ion-item>
-            <ion-avatar item-left>
-                <ion-icon name="time" color="primary"></ion-icon>
-            </ion-avatar>
-            <h3>Thời gian ước lượng</h3>
-            <ion-note item-right>{{step.duration.text}}</ion-note>
-        </ion-item>
+    <!-- <ion-list *ngFor="let step of locationStep"> -->
+        <ion-list-header [innerHTML]="step.html_instructions" (click)="openMarker(step.start_location)" color="danger"></ion-list-header>
         <ion-item>
             <ion-avatar item-left>
                 <ion-icon name="resize" color="primary"></ion-icon>
             </ion-avatar>
             <h3>Khoảng cách</h3>
             <ion-note item-right>{{step.distance.text}}</ion-note>
+        </ion-item>
+        <ion-item>
+            <ion-avatar item-left>
+                <ion-icon name="time" color="primary"></ion-icon>
+            </ion-avatar>
+            <h3>Thời gian ước lượng</h3>
+            <ion-note item-right>{{step.duration.text}}</ion-note>
         </ion-item>
     </ion-list>
 </ion-content>

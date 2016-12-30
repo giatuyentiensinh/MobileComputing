@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { Platform, NavParams, ViewController } from 'ionic-angular';
+import { Platform, NavController, NavParams, ViewController } from 'ionic-angular';
 import { Locations } from '../../providers/locations';
+import { MapPage } from '../map/map';
 
 /*
   Generated class for the ModalMap page.
@@ -12,15 +13,16 @@ import { Locations } from '../../providers/locations';
 	templateUrl: 'modal-map.html'
 })
 export class ModalMapPage {
-	// locations: any;
+	// locationStep: any;
 
 	constructor(
 		public platform: Platform,
+		public navCtrl: NavController,
 		public params: NavParams,
 		public viewCtrl: ViewController,
 		public locations: Locations
 	) {
-		// this.locations = [
+		// this.locationStep = [
 		// 	{
 		// 		html_instructions: 'Gollum',
 		// 		duration: {
@@ -49,7 +51,11 @@ export class ModalMapPage {
 		// 		}
 		// 	}
 		// ];
-		// console.log(this.locations);
+	}
+
+	openMarker(marker) {
+		console.log(marker);
+		this.navCtrl.push(MapPage, { marker: marker });
 	}
 
 	dismiss() {

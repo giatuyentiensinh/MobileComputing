@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController} from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 import { Locations } from '../../providers/locations';
+
 import { MapPage } from '../map/map';
 
 declare var google;
@@ -13,7 +14,11 @@ export class SearchPage {
 
 	address: string;
 
-	constructor(public navCtrl: NavController, public locations: Locations) { }
+	constructor(
+		public navCtrl: NavController,
+		public loadingCtrl: LoadingController,
+		public locations: Locations
+	) { }
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad SearchPage');
@@ -22,10 +27,14 @@ export class SearchPage {
 	searchAddr() {
 		let addr = this.address.split(' ').join('+');
 		this.locations.search(addr);
+		this.loadingCtrl.create({
+			content: "Đang tìm kiếm ...",
+			duration: 500
+		}).present();
 	}
 
 	selectAddress(location) {
-		console.log(location);		
+		console.log(location);
 		this.navCtrl.push(MapPage, { location: location });
 	}
 

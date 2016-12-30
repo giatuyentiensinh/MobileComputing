@@ -112,6 +112,10 @@ export class GoogleMaps {
 		}, false);
 	}
 
+	setMapCenter() {
+		this.map.setCenter(new google.maps.LatLng(this.currentPosition.latitude, this.currentPosition.longitude));
+	}
+
 	addMarker(lat: number, lng: number): void {
 		let latLng = new google.maps.LatLng(lat, lng);
 		let marker = new google.maps.Marker({

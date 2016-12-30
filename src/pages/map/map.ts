@@ -14,9 +14,15 @@ export class MapPage {
 
 	directionCheck: boolean = false;
 
-	constructor(public navCtrl: NavController, public params: NavParams, public maps: GoogleMaps, public platform: Platform, public locations: Locations) {
+	constructor(
+		public navCtrl: NavController,
+		public params: NavParams,
+		public maps: GoogleMaps,
+		public platform: Platform,
+		public locations: Locations
+	) {
 		let location = this.params.get('location');
-		let locationsList = this.params.get('locations');		
+		let locationsList = this.params.get('locations');
 		if (location != undefined) {
 			this.directionCheck = true;
 			this.maps.addDirector(location.geometry.location);
@@ -39,5 +45,9 @@ export class MapPage {
                 this.maps.addMarker(this.maps.currentPosition.latitude, this.maps.currentPosition.longitude);
             });
 		});
+	}
+
+	setCenter() {
+		this.maps.setMapCenter();
 	}
 }

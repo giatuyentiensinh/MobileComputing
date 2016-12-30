@@ -24,11 +24,16 @@ export class SearchPage {
 
 	searchAddr() {
 		let addr = this.address.split(' ').join('+');
-		this.locations.search(addr);
-		this.loadingCtrl.create({
-			content: "Đang tìm kiếm ...",
-			duration: 500
-		}).present();
+		let loading = this.loadingCtrl.create({
+			content: "Đang tìm kiếm ..."
+			// duration: 500
+		});
+		loading.present();
+		this.locations.search(addr).then(() => {
+			loading.dismiss();
+		}, () => {
+			loading.dismiss();			
+		});
 	}
 
 	selectAddress(location) {

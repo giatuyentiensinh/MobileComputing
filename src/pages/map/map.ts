@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NavController, NavParams, ModalController, Platform } from 'ionic-angular';
+import { NavController, NavParams, ModalController, ActionSheetController, Platform } from 'ionic-angular';
 import { GoogleMaps } from '../../providers/google-maps';
 import { Locations } from '../../providers/locations';
 import { ModalMapPage } from '../modal-map/modal-map';
@@ -16,6 +16,7 @@ export class MapPage {
 		public navCtrl: NavController,
 		public params: NavParams,
 		public modalCtrl: ModalController,
+		public actionSheetCtrl: ActionSheetController,
 		public maps: GoogleMaps,
 		public platform: Platform,
 		public locations: Locations
@@ -49,6 +50,51 @@ export class MapPage {
 
 	setCenter() {
 		this.maps.setMapCenter();
+	}
+
+	setZoom() {
+		this.actionSheetCtrl.create({
+			title: 'Chọn cỡ zoom bản đồ',
+			buttons: [
+				{
+					text: '1',
+					handler: () => {
+						this.maps.setZoomNumber(1);
+					}
+				}, {
+					text: '2',
+					handler: () => {
+						this.maps.setZoomNumber(2);
+					}
+				}, {
+					text: '4',
+					handler: () => {
+						this.maps.setZoomNumber(4);
+					}
+				}, {
+					text: '8',
+					handler: () => {
+						this.maps.setZoomNumber(8);
+					}
+				}, {
+					text: '12',
+					handler: () => {
+						this.maps.setZoomNumber(12);
+					}
+				}, {
+					text: '16',
+					handler: () => {
+						this.maps.setZoomNumber(16);
+					}
+				}, {
+					text: 'Hủy bỏ',
+					role: 'cancel',
+					handler: () => {
+						console.log('Cancel clicked');
+					}
+				}
+			]
+		}).present();		
 	}
 
 	openDirection() {

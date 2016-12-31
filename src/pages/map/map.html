@@ -1,8 +1,11 @@
 <ion-header>
     <ion-navbar color="primary">
-        <!-- <ion-icon name="reorder" menuToggle *ngIf="directionCheck"></ion-icon>   -->
-        <!-- <button ion-button menuToggle>Toggle Menu</button> -->
         <ion-title>Bản đồ</ion-title>
+        <ion-buttons end>
+            <button ion-button color="light" (click)="setZoom()">
+                <ion-icon name="arrow-dropup-circle"></ion-icon>
+            </button>
+        </ion-buttons>
         <ion-buttons end>
             <button ion-button color="light" (click)="setCenter()">
                 <ion-icon name="locate"></ion-icon>
@@ -10,7 +13,7 @@
         </ion-buttons>
         <ion-buttons end>
             <button ion-button color="light" (click)="openDirection()">
-                <ion-icon name="git-branch"></ion-icon>
+                <ion-icon name="git-network"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>

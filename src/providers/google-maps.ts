@@ -15,6 +15,7 @@ export class GoogleMaps {
 	mapLoaded: any;
 	mapLoadedObserver: any;
 	apiKey: string;
+	zoom: number = 16;
 
 	constructor(public connectivity: Connectivity) {
 		this.apiKey = 'AIzaSyA2GtFNISM5WTflpE4r5EdGZa0z4OgTDic';
@@ -114,7 +115,12 @@ export class GoogleMaps {
 	}
 
 	setMapCenter() {
+		this.map.setZoom(this.zoom);
 		this.map.setCenter(new google.maps.LatLng(this.currentPosition.latitude, this.currentPosition.longitude));
+	}
+
+	setZoomNumber(zoom: number) {
+		this.zoom = zoom;
 	}
 
 	addMarker(lat: number, lng: number): void {
@@ -134,12 +140,31 @@ export class GoogleMaps {
 		directionsService.route({
 			origin: currentPossition,
 			destination: location,
-			travelMode: 'DRIVING'
+			travelMode: google.maps.TravelMode.DRIVING,
+			provideRouteAlternatives: true
 		}, (response, status) => {
-			if ('OK' === status) {
+			if (google.maps.DirectionsStatus.OK === status) {
+				console.log(response);
 				directionsDisplay.setDirections(response);
 				directionsDisplay.setMap(this.map);
+			} else if (status === google.maps.DirectionsStatus.ZERO_RESULTS) {
+				console.log('No route could be found between the origin and destination.');
+			} else if (status === google.maps.DirectionsStatus.UNKNOWN_ERROR) {
+				console.log('A directions request could not be processed due to a server error. The request may succeed if you try again.');
+			} else if (status === google.maps.DirectionsStatus.REQUEST_DENIED) {
+				console.log('This webpage is not allowed to use the directions service.');
+			} else if (status === google.maps.DirectionsStatus.OVER_QUERY_LIMIT) {
+				console.log('The webpage has gone over the requests limit in too short a period of time.');
+			} else if (status === google.maps.DirectionsStatus.NOT_FOUND) {
+				console.log('At least one of the origin, destination, or waypoints could not be geocoded.');
+			} else if (status === google.maps.DirectionsStatus.INVALID_REQUEST) {
+				console.log('The DirectionsRequest provided was invalid.');
+			} else {
+				console.log("There was an unknown error in your request. Requeststatus: nn" + status);
 			}
+		}, (response, status) => {
+			console.log(response);
+			console.log(status);
 		});
 	}
 

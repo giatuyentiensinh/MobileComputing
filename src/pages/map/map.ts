@@ -26,7 +26,6 @@ export class MapPage {
 		let marker = this.params.get('marker');
 		if (location != undefined) {
 			this.maps.addDirector(location.geometry.location);
-			this.locations.direction(location.address_components[0].short_name.split(' ').join('+'));
 		} else if (locationsList != undefined) {
 			for (let addr of locationsList) {
 				console.log(addr.geometry.location);

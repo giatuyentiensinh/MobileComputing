@@ -13,8 +13,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class Locations {
 
-    data: any;
-    steps: any;
+    data: any;    
     currentLocation: any;
 
     constructor(public http: Http) {
@@ -55,40 +54,6 @@ export class Locations {
             // });
         });
     }
-
-    direction(addr: string): Promise<any> {
-        return new Promise(resolve => {
-            let url = 'https://maps.googleapis.com/maps/api/directions/json?origin=' + this.currentLocation.lat + ',' + this.currentLocation.lng + '&destination=' + addr + '&key=AIzaSyCmfWiweKXK4IrNugFwvK9Z7oliPh7eo2U';
-            // let header = new Headers();
-            // header.append('Content-Type', 'application/json');
-            // header.append('Access-Control-Allow-Origin', '*');
-            // this.http.get(url, { headers: header })
-            //     .map(res => res.json())
-            //     .subscribe(data => {
-            //         console.log(data);
-            //         // resolve(data);
-            //     });
-
-            console.log(url);
-            HTTP.get(url, {}, {})
-                .then(resp => {
-                    console.log(resp.data); // data received by server
-                    try {
-                        this.steps = JSON.parse(resp.data).routes[0].legs[0].steps;
-                    } catch(e) {
-                        console.log("Cannot read property steps of undefined");
-                        console.log(e);
-                    }
-                })
-                .catch(error => {
-                    console.log('error');
-                    console.log(error.status);
-                    console.log(error.error);
-                    console.log(error.headers);
-                });
-        });
-    }
-
 
     applyHaversine(locations) {
         locations.map(location => {

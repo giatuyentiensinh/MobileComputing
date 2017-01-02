@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform, NavController, NavParams, ViewController } from 'ionic-angular';
-import { Locations } from '../../providers/locations';
+import { GoogleMaps } from '../../providers/google-maps';
 import { MapPage } from '../map/map';
 
 /*
@@ -13,49 +13,20 @@ import { MapPage } from '../map/map';
 	templateUrl: 'modal-map.html'
 })
 export class ModalMapPage {
-	// locationStep: any;
 
 	constructor(
 		public platform: Platform,
 		public navCtrl: NavController,
 		public params: NavParams,
 		public viewCtrl: ViewController,
-		public locations: Locations
+		public googleMap: GoogleMaps
 	) {
-		// this.locationStep = [
-		// 	{
-		// 		html_instructions: 'Gollum',
-		// 		duration: {
-		// 			text: '20 mins'
-		// 		},
-		// 		distance: {
-		// 			text: '12km'
-		// 		}
-		// 	},
-		// 	{
-		// 		html_instructions: 'Frodo',
-		// 		duration: {
-		// 			text: '20 mins'
-		// 		},
-		// 		distance: {
-		// 			text: '12km'
-		// 		}
-		// 	},
-		// 	{
-		// 		html_instructions: 'Samwise Gamgee',
-		// 		duration: {
-		// 			text: '20 mins'
-		// 		},
-		// 		distance: {
-		// 			text: '12km'
-		// 		}
-		// 	}
-		// ];
+		console.log(googleMap.steps);
 	}
 
 	openMarker(marker) {
 		console.log(marker);
-		this.navCtrl.push(MapPage, { marker: marker });
+		// this.navCtrl.push(MapPage, { marker: marker });
 	}
 
 	dismiss() {

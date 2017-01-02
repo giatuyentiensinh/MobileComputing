@@ -17,9 +17,8 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-list *ngFor="let step of locations.steps">
-    <!-- <ion-list *ngFor="let step of locationStep"> -->
-        <ion-list-header [innerHTML]="step.html_instructions" (click)="openMarker(step.start_location)" color="danger"></ion-list-header>
+    <ion-list *ngFor="let step of googleMap.steps">
+        <ion-list-header [innerHTML]="step.instructions" (click)="openMarker(step.start_location)" color="danger"></ion-list-header>
         <ion-item>
             <ion-avatar item-left>
                 <ion-icon name="resize" color="primary"></ion-icon>

@@ -16,6 +16,7 @@ export class GoogleMaps {
 	mapLoadedObserver: any;
 	apiKey: string;
 	zoom: number = 16;
+	steps: any;
 
 	constructor(public connectivity: Connectivity) {
 		this.apiKey = 'AIzaSyA2GtFNISM5WTflpE4r5EdGZa0z4OgTDic';
@@ -42,7 +43,6 @@ export class GoogleMaps {
 					let script = document.createElement("script");
 					script.id = "googleMaps";
 					if (this.apiKey) {
-						// script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit';
 						script.src = 'http://maps.google.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit';
 					} else {
 						script.src = 'http://maps.google.com/maps/api/js?callback=mapInit';
@@ -133,7 +133,6 @@ export class GoogleMaps {
 	}
 
 	addDirector(location): void {
-		// console.log(location);
 		let currentPossition = new google.maps.LatLng(this.currentPosition.latitude, this.currentPosition.longitude);
 		let directionsService = new google.maps.DirectionsService();
 		let directionsDisplay = new google.maps.DirectionsRenderer();
@@ -145,6 +144,8 @@ export class GoogleMaps {
 		}, (response, status) => {
 			if (google.maps.DirectionsStatus.OK === status) {
 				console.log(response);
+				this.steps = response.routes[0].legs[0].steps;
+				console.log(response.routes);
 				directionsDisplay.setDirections(response);
 				directionsDisplay.setMap(this.map);
 			} else if (status === google.maps.DirectionsStatus.ZERO_RESULTS) {

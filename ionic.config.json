@@ -2,11 +2,5 @@
   "name": "MobileComputing",
   "app_id": "20122726",
   "v2": true,
-  "typescript": true,
-  "proxies": [
-    {
-      "path": "/maps/api/directions/json?*",
-      "proxyUrl": "https://maps.googleapis.com/maps/api/directions/json?*"
-    }
-  ]
+  "typescript": true
 }
